@@ -1173,6 +1173,13 @@ class YieldNode(Node):
             raise Exception("Unhandled case")
 
 
+class InterpolatedStringNode(Node):
+    def _string_to_node(self, string, parent, on_attribute):
+        if on_attribute == "value":
+            return Node.from_fst(baron.parse("f'%s" % string)[0]["value"], parent=parent, on_attribute=on_attribute)
+        raise Exception
+
+
 class YieldAtomNode(Node):
     def _string_to_node(self, string, parent, on_attribute):
         if on_attribute == "value":
